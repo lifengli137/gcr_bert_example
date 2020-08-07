@@ -14,17 +14,26 @@ import pdb
 parser = argparse.ArgumentParser(description='GCR-Bert-Text-Classification.')
 parser.add_argument('--model', type=str, default='bert', help='Choose a model: bert')
 parser.add_argument("--seed", type=int, default=1234)
+parser.add_argument("--batch_size", type=int, default=128)
+parser.add_argument("--epochs", type=int, default=1234)
+parser.add_argument("--dataset", type=str, default="THUCNews")
+parser.add_argument("--data_path", type=str, default=".")
+parser.add_argument("--model_path", type=str, default=".")
+parser.add_argument("--weight_decay", type=float, default=0.01)
+parser.add_argument("--learning_rate", type=float, default=1e-5)
+parser.add_argument("--warmup", type=float, default=0.05)
+
+
 
 args = parser.parse_args()
 
 if __name__ == '__main__':
     # path of dataset
     #pdb.set_trace()
-    dataset = 'THUCNews' 
     model_name = args.model
     x = import_module('models.'+ model_name)
     
-    config = x.Config(dataset)
+    config = x.Config(args)
     
 
     config.hvd = hvd

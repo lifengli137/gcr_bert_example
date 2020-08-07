@@ -9,7 +9,10 @@ class Config(object):
     Configuration
     """
 
-    def __init__(self, dataset):
+    def __init__(self, dataset, args):
+
+        dataset = args.data_path + '/' + args.dataset
+
         self.model_name = 'bert'
         # Train
         self.train_path = dataset + '/data/train.txt'
@@ -30,16 +33,16 @@ class Config(object):
         # Num of classes
         self.num_classes = len(self.class_list)
         # Num of epochs
-        self.num_epochs = 1
+        self.num_epochs = args.epochs
         # Batch size
-        self.batch_size = 128
+        self.batch_size = args.batch_size
         # length of every sentence (paragraph) , padding if less than it, cut it if longer than it. 
         self.pad_size = 32
         # Learning rate
-        self.learning_rate = 1e-5
+        self.learning_rate = args.learning_rate
         # Location of pretrained Bert
-        self.bert_path = 'bert_pretrain'
-        # Bert tokenizer # Do not understand*********************************************************************
+        self.bert_path = args.model_path + '/bert_pretrain'
+        # Bert tokenizer # 
         #pdb.set_trace()
         self.tokenizer = BertTokenizer.from_pretrained(self.bert_path)  
         #self.tokenizer = BertTokenizer.from_pretrained('bert-base-chinese')
@@ -47,6 +50,9 @@ class Config(object):
         self.hidden_size = 768
         # Fine tune
         self.fine_tune = True
+
+        self.weight_decay = args.weight_decay
+        self.warmup = args.warmup
 
 
 class Model(nn.Module):
