@@ -9,7 +9,7 @@ class Config(object):
     Configuration
     """
 
-    def __init__(self, dataset, args):
+    def __init__(self, args):
 
         dataset = args.data_path + '/' + args.dataset
 
